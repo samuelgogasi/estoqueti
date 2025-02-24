@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Estoque T.I - HSL</title>
+    <link rel="stylesheet" href="estilo.css" />
+  </head>
+  <link rel="icon" href="imagens/siriolibanes.png" />
+  <body background="imagens/tecsirio.jpg">
+    <header>Estoque T.I - HSL</header>
+    <div class="container">
+      <h2>Registrar Produto</h2>
+      <form id="produto-form">
+        <input type="text" id="nome" placeholder="Nome do Produto" required />
+        <input type="text" id="categoria" placeholder="Categoria" required />
+        <input type="text" id="marca" placeholder="Marca" required />
+        <input type="text" id="serie" placeholder="Número de Série" required />
+        <input
+          type="number"
+          id="quantidade"
+          placeholder="Quantidade"
+          min="0"
+          required
+        />
+        <button type="submit">Adicionar Produto</button>
+      </form>
+      <div id="mensagem-produto" class="mensagem"></div>
+
+      <h2>Registrar Entrada/Saída</h2>
+      <form id="movimentacao-form">
+        <input
+          type="text"
+          id="usuario"
+          placeholder="Nome do Usuário"
+          required
+        />
+        <input
+          type="text"
+          id="produto"
+          placeholder="Nome do Produto"
+          required
+        />
+        <input
+          type="text"
+          id="serie-mov"
+          placeholder="Número de Série"
+          required
+        />
+
+        <input 
+          type="text" 
+          id="chamado" 
+          placeholder="Número do chamado ou motivo">
+
+        <input
+          type="number"
+          id="quantidade-mov"
+          placeholder="Quantidade"
+          min="1"
+          required
+        />
+        <select id="tipo-mov">
+          <option value="entrada">Entrada</option>
+          <option value="saida">Saída</option>
+        </select>
+        <button type="submit">Registrar Movimentação</button>
+      </form>
+      <div id="mensagem-movimentacao" class="mensagem"></div>
+
+      <h2>Lista de Produtos</h2>
+      <input type="text" id="busca-produto" placeholder="Buscar produto..." onkeyup="filtrarProdutos()">
+      <div>
+        <input type="text" id="busca-quantidade" placeholder="Digite o nome do produto">
+        <input type="text" id="busca-categoria" placeholder="Digite a categoria">
+        <button onclick="exibirQuantidadePorNomeECategoria()">Buscar Quantidade</button>
+    </div>
+    <p id="resultado-quantidade"></p>
+    
+      <button onclick="exportarProdutosCSV()">
+        Exportar Produtos para CSV
+      </button>
+      <!-- Novo botão -->
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Categoria</th>
+            <th>Marca</th>
+            <th>Número de Série</th>
+            <th>Quantidade</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="lista-produtos"></tbody>
+      </table>
+
+
+      <p id="total-produtos">Total em estoque</p>
+      <h2>Movimentações</h2>
+      <select id="filtro-movimentacao" onchange="filtrarMovimentacoes()">
+        <option value="todos">Todos</option>
+        <option value="entrada">Entradas</option>
+        <option value="saida">Saídas</option>
+      </select>
+      <button onclick="exportarDados('csv')">Exportar para CSV</button>
+      <button onclick="exportarDados('json')">Exportar para JSON</button>
+      <table>
+        <thead>
+          <tr>
+            <th>Usuário</th>
+            <th>Produto</th>
+            <th>Número de Série</th>
+            <th>Quantidade</th>
+            <th>Tipo</th>
+            <th>Chamado</th>
+            <th>Data/Hora</th>
+          </tr>
+        </thead>
+        <tbody id="lista-movimentacoes"></tbody>
+      </table>
+    </div>
+
+    <script src="client/js/app.js"></script>
+
+  </body>
+</html>

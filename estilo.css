@@ -1,0 +1,152 @@
+/* Resetando estilos padrão para consistência */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: #eef2f7;
+  color: #333;
+  text-align: center;
+  line-height: 1.8;
+}
+
+header {
+  background: linear-gradient(135deg, #0077cc54, #005fa375);
+  color: white;
+  padding: 25px;
+  font-size: 30px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+  max-width: 850px;
+  margin: 50px auto;
+  background: rgb(255, 255, 255);
+  padding: 50px;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+input,
+button,
+select {
+  width: 100%;
+  padding: 15px;
+  margin: 12px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 17px;
+  transition: all 0.3s ease-in-out;
+}
+
+input {
+  background-color: #fff;
+  color: #333;
+}
+
+input:focus {
+  border-color: #0077cc;
+  outline: none;
+  box-shadow: 0 0 10px rgba(0, 119, 204, 0.3);
+}
+
+button {
+  background: linear-gradient(135deg, #0077cc, #005fa3);
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  text-transform: uppercase;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #005fa3, #004a7c);
+  transform: scale(1.05);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* Tabela estilizada */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 25px;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+table th, table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+table th {
+  background: #0077cc;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.baixo-estoque {
+  background-color: #ff4444;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+
+.mensagem {
+  padding: 18px;
+  margin: 12px 0;
+  border-radius: 10px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 18px;
+}
+
+.sucesso {
+  background-color: #4caf50;
+  color: white;
+}
+
+.erro {
+  background-color: #ff4444;
+  color: white;
+}
+
+.acoes button {
+  margin: 5px;
+  padding: 10px 15px;
+  font-size: 15px;
+  border-radius: 6px;
+}
+
+@media (max-width: 600px) {
+  .container {
+      padding: 25px;
+  }
+  input,
+  button,
+  select {
+      padding: 14px;
+      font-size: 15px;
+  }
+  table th, table td {
+      padding: 10px;
+  }
+}
