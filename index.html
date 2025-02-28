@@ -5,123 +5,252 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Estoque T.I - HSL</title>
     <link rel="stylesheet" href="estilo.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   </head>
   <link rel="icon" href="imagens/siriolibanes.png" />
-  <body background="imagens/tecsirio.jpg">
-    <header>Estoque T.I - HSL</header>
-    <div class="container">
-      <h2>Registrar Produto</h2>
-      <form id="produto-form">
-        <input type="text" id="nome" placeholder="Nome do Produto" required />
-        <input type="text" id="categoria" placeholder="Categoria" required />
-        <input type="text" id="marca" placeholder="Marca" required />
-        <input type="text" id="serie" placeholder="Número de Série" required />
-        <input
-          type="number"
-          id="quantidade"
-          placeholder="Quantidade"
-          min="0"
-          required
-        />
-        <button type="submit">Adicionar Produto</button>
-      </form>
-      <div id="mensagem-produto" class="mensagem"></div>
-
-      <h2>Registrar Entrada/Saída</h2>
-      <form id="movimentacao-form">
-        <input
-          type="text"
-          id="usuario"
-          placeholder="Nome do Usuário"
-          required
-        />
-        <input
-          type="text"
-          id="produto"
-          placeholder="Nome do Produto"
-          required
-        />
-        <input
-          type="text"
-          id="serie-mov"
-          placeholder="Número de Série"
-          required
-        />
-
-        <input 
-          type="text" 
-          id="chamado" 
-          placeholder="Número do chamado ou motivo">
-
-        <input
-          type="number"
-          id="quantidade-mov"
-          placeholder="Quantidade"
-          min="1"
-          required
-        />
-        <select id="tipo-mov">
-          <option value="entrada">Entrada</option>
-          <option value="saida">Saída</option>
-        </select>
-        <button type="submit">Registrar Movimentação</button>
-      </form>
-      <div id="mensagem-movimentacao" class="mensagem"></div>
-
-      <h2>Lista de Produtos</h2>
-      <input type="text" id="busca-produto" placeholder="Buscar produto..." onkeyup="filtrarProdutos()">
-      <div>
-        <input type="text" id="busca-quantidade" placeholder="Digite o nome do produto">
-        <input type="text" id="busca-categoria" placeholder="Digite a categoria">
-        <button onclick="exibirQuantidadePorNomeECategoria()">Buscar Quantidade</button>
-    </div>
-    <p id="resultado-quantidade"></p>
+  <body background="">
+    <header>
+        <div class="header-content">
+            <div style="display: flex; align-items: center;">
+                <img src="imagens/siriolibanes.png" alt="Logo HSL" class="header-logo">
+                <h1 class="header-title">Sistema de Controle de Estoque T.I</h1>
+            </div>
+            <div class="user-info">
+                <i class="fas fa-user-circle"></i>
+                <span id="usuario-logado">Admin</span>
+                <button onclick="logout()" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+        <div class="system-status">
+            <span class="status-item">
+                <i class="fas fa-database"></i>
+                Total de Itens: <span id="total-items">0</span>
+            </span>
+            <span class="status-item">
+                <i class="fas fa-exclamation-triangle"></i>
+                Itens Críticos: <span id="items-criticos">0</span>
+            </span>
+            <span class="status-item">
+                <i class="fas fa-clock"></i>
+                Última Atualização: <span id="ultima-atualizacao">--:--</span>
+            </span>
+        </div>
+        <div class="theme-toggle">
+            <input type="checkbox" id="darkMode">
+            <label for="darkMode">Modo Escuro</label>
+        </div>
+    </header>
     
-      <button onclick="exportarProdutosCSV()">
-        Exportar Produtos para CSV
-      </button>
-      <!-- Novo botão -->
-      <table>
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>Categoria</th>
-            <th>Marca</th>
-            <th>Número de Série</th>
-            <th>Quantidade</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody id="lista-produtos"></tbody>
-      </table>
+    <div class="container">
+        <div class="dashboard-summary">
+            <div class="summary-card">
+                <i class="fas fa-boxes"></i>
+                <h3>Total em Estoque</h3>
+                <p id="total-produtos">0</p>
+            </div>
+            <div class="summary-card">
+                <i class="fas fa-exchange-alt"></i>
+                <h3>Movimentações Hoje</h3>
+                <p id="movimentacoes-hoje">0</p>
+            </div>
+            <div class="summary-card">
+                <i class="fas fa-chart-line"></i>
+                <h3>Tendência</h3>
+                <p id="tendencia">Estável</p>
+            </div>
+        </div>
 
+        <div class="tabs">
+            <button class="tab-button active" onclick="showTab('cadastro')">
+                <i class="fas fa-box"></i> Cadastro
+            </button>
+            <button class="tab-button" onclick="showTab('movimentacao')">
+                <i class="fas fa-exchange-alt"></i> Movimentação
+            </button>
+            <button class="tab-button" onclick="showTab('consulta')">
+                <i class="fas fa-search"></i> Consulta
+            </button>
+            <button class="tab-button" onclick="showTab('relatorios')">
+                <i class="fas fa-chart-bar"></i> Relatórios
+            </button>
+        </div>
 
-      <p id="total-produtos">Total em estoque</p>
-      <h2>Movimentações</h2>
-      <select id="filtro-movimentacao" onchange="filtrarMovimentacoes()">
-        <option value="todos">Todos</option>
-        <option value="entrada">Entradas</option>
-        <option value="saida">Saídas</option>
-      </select>
-      <button onclick="exportarDados('csv')">Exportar para CSV</button>
-      <button onclick="exportarDados('json')">Exportar para JSON</button>
-      <table>
-        <thead>
-          <tr>
-            <th>Usuário</th>
-            <th>Produto</th>
-            <th>Número de Série</th>
-            <th>Quantidade</th>
-            <th>Tipo</th>
-            <th>Chamado</th>
-            <th>Data/Hora</th>
-          </tr>
-        </thead>
-        <tbody id="lista-movimentacoes"></tbody>
-      </table>
+        <div id="cadastro" class="tab-content active">
+            <div class="card">
+                <h2><i class="fas fa-box"></i> Registrar Produto</h2>
+                <form id="produto-form">
+                    <select id="categoria" required>
+                        <option value="">Selecione uma categoria</option>
+                    </select>
+                    <input type="text" id="tipo" placeholder="Tipo do Produto" required />
+                    <input type="text" id="modelo" placeholder="Modelo" required />
+                    <div class="identificacao-campos">
+                        <input type="text" id="serie" placeholder="Número de Série" />
+                        <span class="ou">OU</span>
+                        <input type="text" id="patrimonio" placeholder="Patrimônio" />
+                    </div>
+                    <input
+                        type="number"
+                        id="quantidade"
+                        placeholder="Quantidade"
+                        min="0"
+                        required
+                    />
+                    <button type="submit">Adicionar Produto</button>
+                </form>
+                <div id="mensagem-produto" class="mensagem"></div>
+            </div>
+        </div>
+
+        <div id="movimentacao" class="tab-content">
+            <div class="card">
+                <h2><i class="fas fa-exchange-alt"></i> Registrar Entrada/Saída</h2>
+                <form id="movimentacao-form">
+                    <input
+                        type="text"
+                        id="usuario"
+                        placeholder="Nome do Usuário"
+                        required
+                    />
+                    <select id="categoria-mov" required>
+                        <option value="">Selecione uma categoria</option>
+                    </select>
+                    <input
+                        type="text"
+                        id="tipo-prod"
+                        placeholder="Tipo do Produto"
+                        required
+                    />
+                    <input
+                        type="text"
+                        id="modelo-mov"
+                        placeholder="Modelo"
+                        required
+                    />
+                    <div class="identificacao-campos">
+                        <input type="text" id="serie-mov" placeholder="Número de Série" />
+                        <span class="ou">OU</span>
+                        <input type="text" id="patrimonio-mov" placeholder="Patrimônio" />
+                    </div>
+                    <input
+                        type="text"
+                        id="destino"
+                        placeholder="Destino do item"
+                        required
+                    />
+                    <input
+                        type="text"
+                        id="chamado"
+                        placeholder="Número do chamado "
+                    />
+                    <input
+                        type="number"
+                        id="quantidade-mov"
+                        placeholder="Quantidade"
+                        min="1"
+                        required
+                    />
+                    <select id="tipo-mov">
+                        <option value="entrada">Entrada</option>
+                        <option value="saida">Saída</option>
+                    </select>
+                    <button type="submit">Registrar Movimentação</button>
+                </form>
+                <div id="mensagem-movimentacao" class="mensagem"></div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Usuário</th>
+                            <th>Categoria</th>
+                            <th>Tipo</th>
+                            <th>Modelo</th>
+                            <th>Série</th>
+                            <th>Quantidade</th>
+                            <th>Tipo Mov.</th>
+                            <th>Destino</th>
+                            <th>Chamado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lista-movimentacoes"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="consulta" class="tab-content">
+            <div class="card">
+                <h2><i class="fas fa-search"></i> Consulta de Estoque</h2>
+                <div class="consulta-container">
+                    <div class="form-group">
+                        <input type="text" id="tipo-busca" placeholder="Buscar por tipo...">
+                        <input type="text" id="modelo-busca" placeholder="Buscar por modelo...">
+                        <input type="text" id="serie-busca" placeholder="Buscar por número de série...">
+                        <input type="text" id="patrimonio-busca" placeholder="Buscar por patrimônio...">
+                    </div>
+                    <div id="resultado-busca"></div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Categoria</th>
+                                <th>Tipo</th>
+                                <th>Modelo</th>
+                                <th>Nº Série</th>
+                                <th>Patrimônio</th>
+                                <th>Quantidade</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-produtos">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="relatorios" class="tab-content">
+            <h2>Relatório de Movimentações</h2>
+            
+            <div class="relatorio-container">
+                <div class="relatorio-header">
+                    <h3>Últimas Movimentações</h3>
+                    <div class="relatorio-acoes">
+                        <button onclick="atualizarRelatorio()" class="btn-atualizar">
+                            <i class="fas fa-sync-alt"></i> Atualizar
+                        </button>
+                        <button onclick="exportarRelatorio()" class="btn-exportar">
+                            <i class="fas fa-file-excel"></i> Exportar Excel
+                        </button>
+                        <button onclick="imprimirRelatorio()" class="btn-imprimir">
+                            <i class="fas fa-print"></i> Imprimir
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="tabela-movimentacoes" class="table-responsive"></div>
+            </div>
+        </div>
     </div>
 
-    <script src="client/js/app.js"></script>
+    <footer>
+        <p>© 2024 HSL - Sistema de Controle de Estoque T.I</p>
+        <p>Versão 1.0</p>
+    </footer>
 
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modal-content"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="interacao.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
   </body>
 </html>
