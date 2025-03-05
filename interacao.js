@@ -306,7 +306,7 @@ document
       }
 
       await atualizarTabelaMovimentacoes();
-      await atualizarTabelaProdutos();
+      await atualizarTabelaProdutos();  
       this.reset();
       exibirMensagem(
         document.getElementById("mensagem-movimentacao"),
