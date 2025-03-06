@@ -248,6 +248,52 @@
         </div>
     </div>
 
+    <!-- Modal de Edição -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Editar Produto</h2>
+            <form id="editForm" class="edit-form">
+                <div class="form-group">
+                    <label for="editCategoria">Categoria:</label>
+                    <select id="editCategoria" required>
+                        <option value="">Selecione uma categoria</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editTipo">Tipo:</label>
+                    <input type="text" id="editTipo" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editModelo">Modelo:</label>
+                    <input type="text" id="editModelo">
+                </div>
+                
+                <div class="form-group">
+                    <label for="editSerie">Número de Série:</label>
+                    <input type="text" id="editSerie">
+                </div>
+                
+                <div class="form-group">
+                    <label for="editPatrimonio">Patrimônio:</label>
+                    <input type="text" id="editPatrimonio">
+                </div>
+                
+                <div class="form-group">
+                    <label for="editQuantidade">Quantidade:</label>
+                    <input type="number" id="editQuantidade" required min="0">
+                </div>
+                
+                <div class="modal-buttons">
+                    <button type="button" class="btn-cancel" onclick="fecharModalEdicao()">Cancelar</button>
+                    <button type="submit" class="btn-save">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script src="interacao.js"></script>
