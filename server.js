@@ -83,7 +83,10 @@ app.post('/api/produtos', async (req, res) => {
     try {
         await connection.beginTransaction();
         
-        const { id, categoria, tipo, modelo, serie, patrimonio, quantidade } = req.body;
+        const { categoria, tipo, modelo, serie, patrimonio, quantidade } = req.body;
+        
+        // Gerar ID único baseado em timestamp
+        const id = `PROD${Date.now().toString().slice(-6)}`;
         
         // Primeiro, buscar o ID da categoria
         const [categorias] = await connection.execute(
