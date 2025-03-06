@@ -7,7 +7,7 @@ const pool = mysql.createPool({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     waitForConnections: true,
-    connectionLimit: 3,
+    connectionLimit: 10,
     queueLimit: 0,
     ssl: {
         rejectUnauthorized: false
@@ -19,7 +19,7 @@ pool.on('error', (err) => {
     console.error('Erro no pool de conexões:', err);
 });
 
-// Teste de conexão inicial
+// Teste de conexão
 pool.getConnection()
     .then(connection => {
         console.log('Conectado ao banco de dados MySQL');
